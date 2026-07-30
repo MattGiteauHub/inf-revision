@@ -1,0 +1,113 @@
+# Active Directory
+
+What is active directory?
+  A directory service developed by Microsoft that centrally manages users, computers, groups, policies and authentication within a Windows domain.
+
+What is a directory?
+  A directory is a structured database that stores information about objects in a network and allows them to be searched, managed, and authenticated.
+
+What is a domain?
+  A grouping of users, computers and resources that share a common directory database and security policies.
+
+What is a forest?
+  Multiple domains that trust each other.
+
+What is a domain controller?
+  A server running AD DS that stores the directory database and handles authentication, authorisation and policy enforcement.
+
+What is AD DS?
+  Active Directory Domain Services (AD DS) is a Microsoft tool that acts as a central database to check passwords and control access across a company network.
+
+What is a GPO?
+  A Group Policy Object (GPO) allows allows administrators to centrally configure security settings, software deployment and Windows configurations.
+
+What is an OU?
+  An Organisational Unit (OU) is a container folder used to group and manage network objects like users, computers and groups
+
+What is a container?
+  An object that holds other objects such as users, computers and groups.
+
+What is a domain admin?
+  A user who belongs to the Domain Admin group, giving them near-total control over a specific network domain.
+
+# Kerberos
+
+What is Kerberos?
+  Microsoft's default authentication protocol that uses encrypted tickets rather than transmitting credentials.
+
+What is a TGT?
+  A Ticket Granting Ticket (TGT) is issued after a successful login and allows the user to request service ticket without re-entering their password.
+
+What is a TGS?
+  A Ticket Generating Service (TGS) ticket is a service ticket issued for a specific service (such as SMB or MSSQL) after presenting a valid TGT.
+
+What is the Kerberos authentication flow?
+  Login -> Client requests a TGT from the Kerberos DC -> Uses TGT to request a service ticket (TGS) -> DC looks up SPN -> DC creates a Kerberos ticket -> Service ticket is presented to the service for authentication
+
+What is an SPN?
+  A Service Principal Name (SPN) identifies a service account so Kerberos knows which account is associated with a service. The SPN tells a client where to locate a network service and which user or computer account holds its security context.
+
+# Kerberos Attacks
+
+What is Kerberoasting?
+  A domain user requests Kerberos service tickets for service accounts, then cracks the encrypted tickets offline to recover the service account password.
+
+Why does Kerberoasting work?
+  The service ticket is always encrypted using the service account's password hash, allowing offline password cracking.
+
+What is AS-REP Roasting?
+  If an account has Kerberos pre-authentication disabled, an attacker can request an AS-REP encrypted with the account's password hash and crack it offline.
+
+What is Pass-the-Ticket?
+  An attacker steals a valid Kerberos service ticket and reuses it to pretend to be a real user and move laterally within the network. The ticket can come from a cached service ticket located in the RAM.
+
+What is a Golden Ticket?
+  A forget service ticket using the KRBTGT (Key Distribution Center (KDC) on every DC) service account's hash, allowing an attacker to impersonate any user in the domain.
+
+What is a Silver Ticket?
+  A forged service ticket created using a service account hash to access a specific service.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
