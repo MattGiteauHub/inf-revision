@@ -1,1 +1,18 @@
+# Windows
 
+# Windows Privilege Escalation
+
+What is an Unquoted Service Path?
+  If a service path containing spaces isn't quoted, Windows may execute a malicious executable placed earlier in the path.
+
+What are Weak Service Permissions?
+  Misconfigured permissions that allow attackers to modify or replace a service executable.
+
+What is DLL Hijacking?
+  Tricking an application into loading a malicious DLL instead of the legitimate one.
+
+What is SeImpersonatePrivilege?
+  A Windows privilege that can often be abused using Potato exploits to obtain SYSTEM privileges.
+
+What is Credential Dumping?
+  Extracting credentials or password hashes from LSASS, SAM or other credential stores.
