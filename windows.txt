@@ -14,5 +14,180 @@ What is DLL Hijacking?
 What is SeImpersonatePrivilege?
   A Windows privilege that can often be abused using Potato exploits to obtain SYSTEM privileges.
 
+What is SeDebugPrivilege?
+  A privilege that allows a process to debug and interact with other processes.
+
+Why is SeDebugPrivilege dangerous?
+  It can allow attackers to access protected processes such as LSASS and extract credentials.
+
+What is SeBackupPrivilege?
+  A privilege allowing users to bypass normal file permissions for backup purposes.
+
+Why is SeBackupPrivilege dangerous?
+  It may allow attackers to read sensitive files such as registry hives containing password hashes.
+
 What is Credential Dumping?
   Extracting credentials or password hashes from LSASS, SAM or other credential stores.
+
+What is LSASS?
+  The Local Security Authority Subsystem Service, a Windows process responsible for enforcing security policies and handling authentication.
+
+Why is LSASS targeted?
+  LSASS may contain credentials, NTLM hashes and Kerberos tickets stored in memory.
+
+What is the SAM Database?
+  The Security Account Manager database stores local user account password hashes.
+
+Why is the SAM database valuable?
+  Extracted hashes can potentially be cracked or used for pass-the-hash attacks.
+
+What is a Local Administrator Account?
+  A local account that has administrative privileges over a single Windows machine.
+
+Why are Local Administrator Accounts important?
+  Local administrators can install software, modify system settings, access protected files and potentially obtain SYSTEM-level privileges.
+
+What is the SYSTEM Account?
+  The highest-privileged account on a Windows operating system, used by the operating system itself.
+
+Why is SYSTEM more powerful than Administrator?
+  SYSTEM has greater privileges than a normal administrator and can access protected resources, services and security components.
+
+What is a Scheduled Task?
+  A Windows feature that automatically runs programs or scripts at specified times or events.
+
+Why are Scheduled Tasks interesting?
+  Tasks running as SYSTEM may allow privilege escalation if the executable or script can be modified.
+
+What are Weak Scheduled Task Permissions?
+  When a low-privileged user can modify a scheduled task or the files it executes.
+
+Why are they dangerous?
+  The attacker can replace the task executable with their own code, causing it to execute with elevated privileges.
+
+What is the Windows Registry?
+  A database that stores Windows configuration settings, application information and system settings.
+
+Why is the Registry interesting during privilege escalation?
+  Incorrect permissions or stored credentials in registry keys can expose sensitive information or allow privilege escalation.
+
+What is a Windows Service?
+  A background process that runs automatically to provide functionality such as networking, applications or system management.
+
+Why are Windows Services interesting during privilege escalation?
+  Services often run with high privileges, such as SYSTEM, and misconfigurations can allow lower-privileged users to execute code with elevated permissions.
+
+What are Weak Service Permissions?
+  A misconfiguration where a low-privileged user has permission to modify a service configuration or executable.
+
+Why are Weak Service Permissions dangerous?
+  If a user can modify a SYSTEM service executable, they may be able to replace it with malicious code and gain SYSTEM privileges.
+
+What is Service Binary Hijacking?
+  Replacing or modifying the executable that a privileged Windows service runs.
+
+Why does Service Binary Hijacking work?
+  If a service runs as SYSTEM and the executable can be modified by a lower-privileged user, the attacker-controlled code will execute with SYSTEM privileges.
+
+What is the Windows Registry Hive?
+  Files containing registry data, including security information and system configuration.
+
+Important hives:
+- SAM
+- SYSTEM
+- SECURITY
+
+What is a Windows Access Token?
+  A security object containing information about a user's identity and privileges.
+
+What is Token Impersonation?
+  Using another user's access token to perform actions as that user.
+
+Why is Token Impersonation dangerous?
+  If an attacker obtains a privileged token, they may execute commands with elevated permissions.
+
+What is User Account Control (UAC)?
+  A Windows security feature that limits administrative privileges unless explicitly approved.
+
+Does bypassing UAC give full privilege escalation?
+  Not always. UAC bypasses usually require that the attacker already has local administrator privileges.
+
+What is Group Policy?
+  A Windows feature used by administrators to centrally configure security settings, permissions, software and user behaviour across a domain.
+
+Why is Group Policy interesting during privilege escalation?
+  Poorly configured Group Policies can expose credentials, grant excessive permissions or create attack paths.
+
+What are GPO Permissions?
+  Permissions controlling who can modify or apply Group Policy Objects.
+
+Why are Weak GPO Permissions dangerous?
+  A user who can modify a GPO applied to privileged users or computers may be able to execute code with elevated privileges.
+
+What is Windows Credential Manager?
+  A Windows feature that stores saved credentials for applications, networks and remote connections.
+
+Why is Credential Manager interesting?
+  Stored credentials may allow attackers to authenticate to other systems.
+
+What is PowerShell History?
+  A file storing previously executed PowerShell commands.
+
+Location:
+%APPDATA%\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+
+Why is PowerShell history valuable?
+  It may contain passwords, commands, API keys or administrative scripts.
+
+# Windows Enumeration Tools
+
+What is WinPEAS?
+  An automated Windows privilege escalation enumeration tool.
+
+What does WinPEAS check?
+ - Services
+ - Registry permissions
+ - Scheduled tasks
+ - Privileges
+ - Credentials
+ - Installed software
+ - Security settings
+
+What is Seatbelt?
+  A Windows security enumeration tool that collects information about the host and security configuration.
+
+What is PowerUp?
+  A PowerShell toolkit used to identify common Windows privilege escalation vulnerabilities.
+
+What is SharpUp?
+  A C# version of PowerUp used for Windows privilege escalation checks.
+
+# Windows Enumeration Tools
+
+What is BloodHound?
+  A tool that maps Active Directory relationships to identify privilege escalation and lateral movement paths.
+
+What is SharpHound?
+  The data collection component of BloodHound that gathers Active Directory information.
+
+What is NetExec?
+  A post-exploitation tool used for Windows network enumeration, credential validation and remote execution.
+
+What is Mimikatz?
+  A tool used to extract credentials, password hashes and Kerberos tickets from Windows systems.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
