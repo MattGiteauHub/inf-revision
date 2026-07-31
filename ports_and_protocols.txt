@@ -53,9 +53,12 @@ Video streaming
 80/8000/8080 - HTTP - Unencrypted web traffic
 88 - Kerberos - AD authentication
 110 - POP3 - Receiving email
+123 - NTP - Network Time Protocol
 135 - MS RPC - Windows Remote Procedure Call
 139 - NetBIOS - Legacy Windows file sharing
 143 - IMAP - Email retrieval
+161 - SNMP - Simple Network Management Protocol
+179 - BGP - Border Gateway Protocol
 389 - LDAP - AD queries
 443/8443 - HTTPS - Encrypted web traffic
 445 - SMB - Windows file sharing and remote administration
@@ -73,3 +76,22 @@ Video streaming
 5900 - VNC - Remote desktop
 5985 - WinRM - Windows Remote Management (HTTP)
 5986 - WinRM - Windows Remote Management (HTTPS)
+
+# UDP
+
+53 - DNS - DNS queries
+67 - DHCP - DHCP server
+68 - DHCP - DHCP client
+69 - TFTP - Trivial File Transfer Protocol
+88 - Kerberos - Authentication (Also uses TCP)
+123 - NTP - Network Time Protocol
+137 - NetBIOS Name Service - Name resolution
+138 - NetBIOS Datagram - NetBIOS communication
+161 - SNMP - Network device management
+162 - SNMP Trap - Device alets
+389 - LDAP - Can also use UDP for certain operations
+500 - IKE - Internet Key Exchange/IPsec VPN key exchange
+514 - Syslog - Logging
+520 - RIP - Routing Information Protocol
+5060 - SIP - VoIP Signalling
+5353 - mDNS - Multicast DNS
