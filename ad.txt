@@ -67,47 +67,310 @@ What is a Golden Ticket?
 What is a Silver Ticket?
   A forged service ticket created using a service account hash to access a specific service.
 
+# NTLM
 
+What is NTLM?
+  NTLM is an older Microsoft authentication protocol that uses NT password hashes rather than plaintext passwords.
 
+What is the difference between NTLM and Kerberos?
+  Kerberos uses tickets and a trusted KDC, whereas NTLM relies on challenge-response authentication and is generally less secure.
 
+What is Pass-the-Hash?
+  An attacker steals a users NT hash and uses it to authenticate to other network systems instead of the plaintext password.
 
+What is an NTLM Relay?
+  Intercepting an NTLM authentication attempt and forwarding it to another service to authenticate as the victim without cracking their password.
 
+Why is an NTLM Relay possible?
+  Because NTLM authenticates the client but doesn't always verify the identity of the server, allowing authentication to be relayed if protections aren't in place.
 
+# LDAP
 
+What is LDAP?
+  LDAP is a protocol used to query and manage directory services, such as AD.
 
+Why is LDAP useful to an attacker?
+  It allows enumeration of users, groups, computers, password policies, SPNs and other valuable AD information.
 
+What is LDAPS?
+  LDAP over TLS, providing encrypted communication between clients and the directory service.
 
+# SMB
 
+What is SMB?
+  Server Message Block (SMB) is a protocol for file sharing, printer sharing and remote administration in Windows environments.
 
+What is SMB signing?
+  SMB signing digitally signs SMB traffic to prevent tampering and relay attacks.
 
+Why is SMB useful during internal testing?
+  It provides access to shared folders, SYSVOL, NETLOGON, and administrative shares that often contain valuable information.
 
+What are Administrative Shares?
+  Hidden Windows shares such as C$, ADMIN$ and IPC$ used for remote administration.
 
+# DNS
 
+What is DNS?
+  DNS (Domain Name System) translates hostnames into IP addresses.
 
+Why is DNS important in AD?
+  DCs register DNS records so clients can locate authentication and directory services.
 
+What is an SRV record?
+  A DNS record that tells clients where services such as DCs are located?
 
+# BloodHound
 
+What is BloodHound?
+  A tool that maps relationships in AD to identify privilege escalation and attack paths.
 
+What data does it collect?
+  Users. groups, computers, ACLs, sessions, trusts, GPOs, local administrators and delegation relationships.
 
+Why is BloodHound useful?
+  It highlights complex privilege escalation paths that are difficult to identify manually.
 
+How is the data collected for BloodHound?
+  Using the tool SharpHound.
 
+# GPOs
 
+What is a GPO?
+  A Group Policy Object (GPO) is a container where policy settings are defined. This can included hundreds of rules such as password complexity and firewall settings.
 
+# ACLs
 
+What is an ACL?
+  An Access Control List (ACL) defines which users or groups have permissions over an object.
 
+What is GenericAll?
+  Full control over an object, allowing actions such as password resets, group membership changes or ACL modification.
 
+What is GenericWhite?
+  Permission to modify certain attributes of an object.
 
+What is WriteDACL?
+  Permission to change the object's permissions.
 
+What is WriteOwner?
+  Permission to change ownership of an object.
 
+# AD CS
 
+What is AD CS?
+  Active Directory Certificate Services (AD CS) is a Windows role that issues certificates for authentication, encryption and digital signatures.
 
+Why is AD CS interesting to attackers?
+  Misconfigured certificate templates can allow attackers to obtain certificates and authenticate as privileged users without knowing their passwords.
 
+# Common Misconfigurations
 
+What is LLMNR?
+  A Windows name resolution protocol that can be abused to capture NTLM authentication with tools like Responder.
 
+Why disable LLMNR?
+  It reduces the risk of credential capture and NTLM relay attacks.
 
+What is SYSVOL?
+  A replication share on DCs containing Group Policy files and login scripts.
 
+What is NETLOGON?
+  A share used for domain logon scripts and authentication-related files.
 
+# Mitigation
 
+Kerberoasting:
+  Use long, complex passwords or managed service accounts (gMSAs) for service accounts, minimise privileged service accounts, monitor for unusual TGS requests.
 
+AS-REP Roasting:
+  Ensure Kerberos pre-authentication is enabled on all user accounts unless there is a specific business requirement.
 
-    
+Pass-the-Hash:
+  Enable Credential Guard, use LAPS/Windows LAPS to prevent local admin password reuse, restrict administrative logons and disable NTLM where possible.
+
+Pass-the-Ticket:
+  Protect LSASS (Credential Guard), log off privileged sessions when not needed, rotate the KRBTGT account after compromise and monitor ticket activity.
+
+Golden Ticket:
+  Protect DCs, secure the KRBTGT account, rotate the KRBTGT password twice after compromise and monitor for anomalous Kerberos tickets.
+
+Silver Ticket:
+  Use strong service account passwords or gMSAs, rotate compromised service account credentials and monitor service ticket usage.
+
+NTLM Relay:
+  Enable SMB signing, enforce LDAP signing and channel binding, disable NTLM where feasible and prevent coercion attacks.
+
+LLMNR/NBT-NS Poisoning:
+  Disable LLMNR and NetBIOS over TCP/IP via Group Policy and use DNS instead.
+
+SMB Signing Disabled:
+  Enable SMB signing on clients and servers to prevent relay and tampering.
+
+Weak Service Permissions:
+  Restrict service permissions so only administrators can modify services or executables.
+
+Unquoted Service Paths:
+  Quote service executable paths containing spaces and restrict write permissions on those directories.
+
+DLL Hijacking:
+  Use secure DLL search order, application allowlisting and ensure writeable directories aren't searched first.
+
+AlwaysInstallElevated:
+  Disable the policy unless absolutely required, as it allows MSI packages to run with SYSTEM privileges.
+
+Credential Dumping (LSASS):
+  Enable Credential Guard, enable LSASS Protected Process Light (RunAsPPL), restrict admin access and deploy EDR monitoring.
+
+Password Spraying:
+  Enforce MFA, implement strong password policies, monitor failed logons and use smart account lockout policies.
+
+Brute Force:
+  MFA, account lockout thresholds, rate limiting, strong passwords and monitoring.
+
+Credential Stuffing:
+  MFA, unique passwords, breach monitoring and password reset after known compromises.
+
+Weak Passwords:
+  Enforce password length, use banned password lists, encourage password managers and deploy MFA.
+
+Local Admin Password Reuse:
+  Use Windows LAPS or another local administrator password management solution so each machine has a unique password.
+
+Excessive AD Permissions:
+  Apply least privilege, regularly review delegated permissions and audit ACLs with tools like BloodHound.
+
+GPP Passwords:
+  Remove old Group Policy Preferences passwords, as they're stored with a publicly known encryption key.
+
+SYSVOL Exposure:
+  Restrict sensitive data from login scripts, audit permissions and remove embedded credentials.
+
+AD CS Misconfigurations:
+  Audit certificate templates, require manager approval where appropriate, restrict enrolment permissions and monitor certificate issuance.
+
+Pivoting:
+  Network segmentation, internal firewalls, least privilege and monitoring for unusual proxying or tunnelling traffic.
+
+Lateral Movement:
+  Restrict local admin rights, use tiered administration, enable Windows Firewall, implement MFA for admin accounts and monitor remote management protocols (WinRM, WMI, PsExec).
+
+# Practice Question:
+
+You are put onto a user with credentials and access to a domain. As a penetration tester, what are the steps you would take?
+
+1. Validate Access
+  - Who am i?
+  - What groups am I a member of?
+  - Is this a standard domain user or more privileged?
+  - What machine am I logged onto?
+
+E.g.
+whoami
+whoami /groups
+hostname
+ipconfig /all
+
+2. Enumerate the Local Machine
+ - Local admin rights
+ - Installed software
+ - Running services
+ - Scheduled tasks
+ - Stored credentials
+ - Interesting files
+ - Token privileges
+ - Windows privilege escalation opportunities
+
+E.g.
+WinPEAS
+Seatbelt
+PowerUp
+
+3. Enumerate the Domain
+ - DCs
+ - DAs
+ - Users
+ - Groups
+ - Computers
+ - OUs
+ - GPOs
+ - Trust relationships
+ - Password policy
+ - Attack paths
+
+E.g.
+Powerview
+NetExec
+BloodHound
+SharpHound
+LDAP queries
+
+4. Look for Misconfigurations
+ - Kerberoastable accounts
+ - AS-REP roastable users
+ - Weak ACLs
+ - Excessive permissions
+ - Password reuse
+ - LAPS not deployed
+ - SMB signing disabled
+ - AD CS misconfigurations
+ - Interesting GPOs
+
+5. Check for Credentials
+ - Saved passwords
+ - Browser credentials
+ - Configuration files
+ - PowerShell history
+ - SSH keys
+ - RDP credentials
+ - Credential manager
+ - Accessible network shares
+
+E.g
+PowerShell script for share browsing
+
+6. Build an Attack Path
+ - Using the data gathered
+
+E.g.
+Domain User
+↓
+Kerberoast
+↓
+Crack Service Account
+↓
+Service Account is Local Admin
+↓
+Dump Credentials
+↓
+Domain Admin Session Found
+↓
+Compromise Domain Controller
+
+OR 
+
+Domain User
+↓
+BloodHound
+↓
+GenericAll on Group
+↓
+Add Myself
+↓
+Privilege Escalation
+
+7. Attempt Privilege Escalation
+  - Kerberoasting
+  - AS-REP Roasting
+  - ACL abuse
+  - Windows privilege escalation
+  - AD CS abuse
+  - Pass-the-Hash
+  - Token impersonation
+
+8. Lateral Movement
+  - WinRM
+  - SMB
+  - PsExec
+  - WMI
+  - RDP
