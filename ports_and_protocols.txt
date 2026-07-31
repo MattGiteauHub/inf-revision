@@ -1,1 +1,75 @@
+# Ports and Protocols
 
+# TCP
+
+How does TCP work?
+  SYN -> SYN-ACK -> ACK
+
+Characteristics:
+  - Connection-oriented (3-way handshake)
+  - Reliable delivery
+  - Error checking
+  - Packet ordering
+  - Retransmits lost packets
+  - Slightly slower than UDP
+
+E.g.
+HTTP/HTTPS
+SSH
+SMB
+LDAP
+RDP
+FTP
+SMTP
+
+# UDP
+
+How does UDP work?
+  Sends without establishing a connection.
+
+Characteristics:
+  - Connectionless
+  - No acknowledgements
+  - No retransmissions
+  - Faster than TCP
+  - Lower overhead
+
+E.g.
+DNS queries
+DHCP
+SNMP
+TFTP
+NTP
+VoIP
+Video streaming
+
+# TCP Ports and Protocols
+
+20/21 - FTP - 20 = Data, 21 = Control File transfer
+22 - SSH - Secure remote administration
+23 - Telnet - Unencrypted remote shell
+25 - SMTP - Sending email
+53 - DNS - Zone transfers and DNS over TCP
+80/8000/8080 - HTTP - Unencrypted web traffic
+88 - Kerberos - AD authentication
+110 - POP3 - Receiving email
+135 - MS RPC - Windows Remote Procedure Call
+139 - NetBIOS - Legacy Windows file sharing
+143 - IMAP - Email retrieval
+389 - LDAP - AD queries
+443/8443 - HTTPS - Encrypted web traffic
+445 - SMB - Windows file sharing and remote administration
+465 - SMTPS - Secure SMTP
+587 - SMTP Submission - Authenticated mail sending
+636 - LSAPS - Secure LDAP
+993 - IMAPS - Secure IMAP
+995 - POP3S - Secure POP3
+1433 - MSSQL - Microsoft SQL Server
+1521 - Oracle - Oracle database
+2049 - NFS - Network File System
+3306 - MySQL - MySQL database
+3389 - RDP - Remote desktop protocol
+5432 - PostgreSQL - PostgreSQL database
+5900 - VNC - Remote desktop
+5985 - WinRM - Windows Remote Management (HTTP)
+5986 - WinRM - Windows Remote Management (HTTPS)
