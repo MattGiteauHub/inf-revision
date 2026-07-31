@@ -11,7 +11,135 @@ Why are SUID binaries dangerous?
 What is PATH Hijacking?
   Manipulating the PATH variable so a privileged process executes a malicious binary instead of the intended one.
 
+Why does PATH Hijacking work?
+  If a privileged script calls a program without specifying its full path, the operating system searches the PATH variable and may execute an attacker-controlled binary.
+
 What is GTFOBins?
   A collection of legitimate Linux binaries that can be abused for privilege escalation or shell escapes.
 
+Why is GTFOBins useful?
+  It provides tested techniques for abusing common binaries such as vim, find, tar, bash and python during post-exploitation.
 
+What is sudo -l?
+  A command that lists which commands the current user can execute with sudo.
+
+Why is sudo -l important?
+  It can reveal commands that may be abused to gain root privileges especially if they can be run without a password.
+
+What are Linux Capabilities?
+  Capabilities allow specific privileged operations to be granted to binaries without giving them full root privileges.
+
+Why are Capabilities dangerous?
+  Capabilities such as CAP_SETUID or CAP_SYS_ADMIN can often be abused to gain elevated privileges is assigned to the wrong binary.
+
+What is a Cron Job?
+  A scheduled task that runs automatically at specified times or intervals.
+
+Why are Cron Jobs dangerous?
+  If a root-owned cron job executes a writeable script or binary, an attacker may modify it to execute commands as root.
+
+What are Writeable Scripts?
+  Scripts that can be modified by a low-privileged user but are executed by a more privileged account.
+
+Why are Writeable Scripts dangerous?
+  If root executes the modified scripts, the attacker's code will also run with root privileges.
+
+What is a Writeable File?
+  A file that the current user has permission to modify.
+
+Why are Writeable Files important?
+  Sensitive writeable files may allow attackers to alter configurations, inject commands or escalate privileges.
+
+What is an SSH Private key?
+  A cryptographic key used to authenticate to remote systems without requiring a password.
+
+Why are SSH keys valuable?
+  Compromised private keys may allow attackers to authenticate to additional Linux servers and move laterally.
+
+What is Password Reuse?
+  Using the same password across multiple accounts or systems.
+
+Why is Password Reuse dangerous?
+  Credentials obtained from one system may also provide access to other hosts, databases or administrative accounts.
+
+What are Environment Variables?
+  Variables that influence how processes and applications execute.
+
+Why are Environment Variables dangerous?
+  Variables such as PATH or LD_PRELOAD can sometimes be manipulated to execute malicious code in privileged processes.
+
+What is a Kernel Exploit?
+  An exploit targeting a vulnerability within the Linux kernel to obtain elevated privileges. E.g. Dirty Pipe.
+
+When should Kernel Exploits be used?
+  Generally as a last resort after exhausting safer privilege escalation opportunities, due to their potential impact on system stability.
+
+What is NFS?
+  The Network File System protocol allows remote directories to be shared between systems.
+
+Why is NFS interesting?
+  Misconfigured exports, such as those using no_root_squash, may allow attackers to gain root-level access.
+
+What is Docker Privilege Escalation?
+  Abusing membership of the docker group to gain root access on the underlying host.
+
+Why is Docker group membership dangerous?
+  Members of the docker group can often mount the host filesystem inside a container, effectively giving them root-level access.
+
+What does NOPASSWD mean?
+  NOPASSWD allows a user to execute specified commands with sudo without being prompted for their password.
+
+Why can NOPASSWD be dangerous?
+  If a user can run an interactive binary such as vim, less, find, or bash with NOPASSWD, they may be able to spawn a root shell.
+
+What is NFS?
+  The Network File System protocol allows remote directories to be shared between systems.
+
+Why is NFS interesting?
+  Misconfigured exports, such as those using no_root_squash, may allow attackers to gain root-level access.
+
+# Linux Enumeration Tools
+
+What is LinPEAS?
+  An automated Linux enumeration script that identifies common privilege escalation opportunities.
+
+What does LinPEAS look for?
+  SUID binaries, sudo permissions, capabilities, cron jobs, writable files, credentials, kernel vulnerabilities and other common misconfigurations.
+
+What is LinEnum?
+  A Linux enumeration script that gathers system information and highlights potential privilege escalation vectors.
+
+What is Linux Exploit Suggester?
+  A tool that compares the running kernel version against known local privilege escalation vulnerabilities.
+
+What is pspy?
+  A tool that monitors running processes without requiring root privileges.
+
+Why is pspy useful?
+  It can reveal root processes or cron jobs executing scripts that may be writable or otherwise exploitable.
+
+# Linux Lateral Movement
+
+How is SSH used for Lateral Movement?
+  Attackers use stolen passwords or private keys to authenticate to additional Linux systems.
+
+Why are SSH Keys useful for Lateral Movement?
+  Private keys often provide passwordless access to multiple hosts within an environment.
+
+How is Password Reuse used for Lateral Movement?
+  Credentials obtained from one host are tested against other systems, services or administrative accounts.
+
+Why are Configuration Files interesting?
+  Configuration files frequently contain hardcoded credentials for databases, APIs or other servers that can facilitate further access.
+
+Why is NFS useful for Lateral Movement?
+  Mounted NFS shares may expose sensitive files, credentials or SSH keys belonging to other systems or users.
+
+Why are SMB Shares useful?
+  Linux hosts often access Windows SMB shares, which may contain credentials, scripts or sensitive organisational data.
+
+Why is Docker useful for Lateral Movement?
+  Containers often contain credentials, mounted volumes or network access that can be leveraged to move between systems or compromise the host.
+
+Why is Kubernetes interesting?
+  Compromised Kubernetes service account tokens or kubeconfig files can provide access to other pods, namespaces or even the cluster control plane if permissions are overly broad.
