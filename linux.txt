@@ -1,1 +1,17 @@
+# Linux
+
+# Linux Privilege Escalation
+
+What is a SUID Binary?
+  An executable that runs with the owner's privileges, often root, regardless of who launches it.
+
+Why are SUID binaries dangerous?
+  Misconfigured SUID binaries can be abused to execute commands with elevated privileges.
+
+What is PATH Hijacking?
+  Manipulating the PATH variable so a privileged process executes a malicious binary instead of the intended one.
+
+What is GTFOBins?
+  A collection of legitimate Linux binaries that can be abused for privilege escalation or shell escapes.
+
 
